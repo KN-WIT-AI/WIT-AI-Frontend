@@ -2,9 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { ChatBlock } from "./components/ChatBlock";
 import { ChatInput } from "./components/ChatInput";
 import { ChatBlockType } from "./models/chat-block-type";
-import { delayTask } from "./logic/chat-helpers";
+import { delayTask, uuidv4 } from "./logic/chat-helpers";
 import { chatLetterDelay } from "./models/chat-consts";
-import { Flex, useToast, UseToastOptions } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  SkeletonCircle,
+  useToast,
+  UseToastOptions,
+} from "@chakra-ui/react";
 import { getChatAnswer, getChatHistory } from "./logic/chat-service";
 import { ChatMessage } from "./models/chat-message";
 
@@ -16,11 +22,15 @@ const errorToast: UseToastOptions = {
   isClosable: true,
 };
 
-const chatId = "test";
+const CHAT_ID_LS_KEY = "chatId";
 
 export function Chat() {
+  const [chatId, setChatId] = useState(
+    localStorage.getItem(CHAT_ID_LS_KEY) || ""
+  );
   const [chat, setChat] = useState<ChatMessage[]>([]);
   const [inputDisabled, setInputDisabled] = useState(false);
+  const [waiting, setWaiting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const toast = useToast();
 
@@ -35,7 +45,19 @@ export function Chat() {
     }
   }
 
+  function resetChat() {
+    localStorage.removeItem(CHAT_ID_LS_KEY);
+    const guid = uuidv4();
+    localStorage.setItem(CHAT_ID_LS_KEY, guid);
+    setChatId(guid);
+    setChat([]);
+  }
+
   useEffect(() => {
+    if (chatId === "") {
+      resetChat();
+    }
+
     loadChat();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -66,15 +88,18 @@ export function Chat() {
   async function insertMessage(message: string) {
     setInputDisabled(true);
 
+    setWaiting(true);
     addMessage(message, ChatBlockType.User);
     await scrollToInput();
 
     try {
       const response = await getChatAnswer(chatId, message);
       addMessage(response, ChatBlockType.Bot);
+      setWaiting(false);
       await scrollToInput();
       await delayTask(chatLetterDelay * response.length);
     } catch (error) {
+      setWaiting(false);
       toast(errorToast);
       await scrollToInput();
     }
@@ -85,6 +110,7 @@ export function Chat() {
 
   return (
     <div style={{ padding: "2rem" }}>
+      <Button onClick={() => resetChat()}>Clear</Button>
       <h1>Chat</h1>
       <Flex justifyContent={"flex-end"} direction={"column"} height={"100%"}>
         <Flex
@@ -95,6 +121,13 @@ export function Chat() {
           {chat.map((message, index) => (
             <ChatBlock key={`${message.text}_${index}`} message={message} />
           ))}
+          {waiting && (
+            <Flex gap={"0.5rem"} paddingY={"1rem"} justifyContent={"center"}>
+              <SkeletonCircle size="4" />
+              <SkeletonCircle size="4" />
+              <SkeletonCircle size="4" />
+            </Flex>
+          )}
         </Flex>
 
         <ChatInput

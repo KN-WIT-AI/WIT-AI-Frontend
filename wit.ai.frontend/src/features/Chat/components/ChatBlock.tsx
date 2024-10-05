@@ -39,6 +39,7 @@ export function ChatBlock(props: Props) {
     >
       <Card
         padding={"0.5rem 1rem"}
+        maxWidth={'80%'}
         bgColor={
           props.message.type === ChatBlockType.User ? "blue.300" : undefined
         }
