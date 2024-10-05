@@ -16,11 +16,16 @@ const justifyContent = {
 
 export function ChatBlock(props: Props) {
   const [text, setText] = useState(
-    props.message.type === ChatBlockType.User ? props.message.text : ""
+    props.message.type === ChatBlockType.Bot && props.message.showAnimation
+      ? ""
+      : props.message.text
   );
 
   useEffect(() => {
-    if (props.message.type === ChatBlockType.Bot) {
+    if (
+      props.message.type === ChatBlockType.Bot &&
+      props.message.showAnimation
+    ) {
       typeText(props.message.text, chatLetterDelay, setText);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

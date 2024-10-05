@@ -1,11 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChatBlock } from "./components/ChatBlock";
 import { ChatInput } from "./components/ChatInput";
 import { ChatBlockType } from "./models/chat-block-type";
 import { delayTask } from "./logic/chat-helpers";
 import { chatLetterDelay } from "./models/chat-consts";
 import { Flex, useToast, UseToastOptions } from "@chakra-ui/react";
-import { getChatAnswer } from "./logic/chat-service";
+import { getChatAnswer, getChatHistory } from "./logic/chat-service";
 import { ChatMessage } from "./models/chat-message";
 
 const errorToast: UseToastOptions = {
@@ -16,11 +16,29 @@ const errorToast: UseToastOptions = {
   isClosable: true,
 };
 
+const chatId = "test";
+
 export function Chat() {
   const [chat, setChat] = useState<ChatMessage[]>([]);
   const [inputDisabled, setInputDisabled] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const toast = useToast();
+
+  async function loadChat() {
+    try {
+      const chatHistory = await getChatHistory(chatId);
+      setChat(chatHistory);
+      await scrollToInput();
+      await focusInput();
+    } catch (error) {
+      toast(errorToast);
+    }
+  }
+
+  useEffect(() => {
+    loadChat();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function addMessage(message: string, type: ChatBlockType) {
     setChat((chat) => {
@@ -29,6 +47,7 @@ export function Chat() {
         {
           text: message,
           type: type,
+          showAnimation: type === ChatBlockType.Bot,
         },
       ];
     });
@@ -51,7 +70,7 @@ export function Chat() {
     await scrollToInput();
 
     try {
-      const response = await getChatAnswer("", message);
+      const response = await getChatAnswer(chatId, message);
       addMessage(response, ChatBlockType.Bot);
       await scrollToInput();
       await delayTask(chatLetterDelay * response.length);

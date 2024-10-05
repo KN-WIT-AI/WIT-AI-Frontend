@@ -32,8 +32,14 @@ export const ChatInput = forwardRef(
           placeholder="Enter your message"
           disabled={props.disabled ?? false}
         />
-        <InputRightElement width={'5rem'}>
-          <Button onClick={() => onTrigger()} width={'100%'}>Send</Button>
+        <InputRightElement width={"5rem"}>
+          <Button
+            onClick={() => onTrigger()}
+            width={"100%"}
+            disabled={props.disabled ?? false}
+          >
+            Send
+          </Button>
         </InputRightElement>
       </InputGroup>
     );

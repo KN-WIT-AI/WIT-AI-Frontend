@@ -1,3 +1,4 @@
+import os
 from openai import OpenAI
 
 def call_openai_api(messages, temperature = 0.9, max_tokens = 250):
@@ -5,7 +6,7 @@ def call_openai_api(messages, temperature = 0.9, max_tokens = 250):
     client = OpenAI(api_key=openai_api_key)
     
     return client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4o",
         messages=messages,
         temperature=temperature,
         max_tokens=max_tokens,
