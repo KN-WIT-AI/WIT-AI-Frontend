@@ -14,6 +14,15 @@ async function postRequest(endpoint: string, body: unknown) {
   return await response.json();
 }
 
+async function getRequest(endpoint: string) {
+  const response = await fetch(`${apiBaseUrl}${endpoint}`);
+  return await response.json();
+}
+
+export async function getWelcomeMessage() {
+  return await getRequest('/get-welcome-message')
+}
+
 export async function getChatAnswer(
   chatId: string,
   message: string

@@ -31,6 +31,7 @@ export const ChatInput = forwardRef(
           variant="outline"
           placeholder="Enter your message"
           disabled={props.disabled ?? false}
+          paddingRight={'6rem'}
         />
         <InputRightElement width={"5rem"}>
           <Button

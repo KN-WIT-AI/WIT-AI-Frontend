@@ -1,1 +1,1 @@
-export const chatLetterDelay = 50;
+export const chatLetterDelay = 25;
