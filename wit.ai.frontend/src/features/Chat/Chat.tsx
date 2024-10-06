@@ -119,7 +119,7 @@ export function Chat() {
           justifyContent={"flex-end"}
         >
           {chat.map((message, index) => (
-            <ChatBlock key={`${message.text}_${index}`} message={message} />
+            <ChatBlock key={index} message={message} />
           ))}
           {waiting && (
             <Flex gap={"0.5rem"} paddingY={"1rem"} justifyContent={"center"}>

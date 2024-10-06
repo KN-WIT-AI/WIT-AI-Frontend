@@ -50,7 +50,7 @@ export function ChatBlock(props: Props) {
       >
         <span>
           {reactStringReplace(text, "[placeLinkHere]", (match) => (
-            <Link href={formLink} target="_blank" rel="noreferrer" color={'blue.300'} fontWeight={'bold'}>Link do formularza</Link>
+            <Link key={match} href={formLink} target="_blank" rel="noreferrer" color={'blue.300'} fontWeight={'bold'}>Link do formularza</Link>
           ))}
         </span>
       </Card>
