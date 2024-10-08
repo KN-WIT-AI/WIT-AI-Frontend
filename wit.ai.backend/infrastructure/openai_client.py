@@ -1,3 +1,4 @@
+import os
 from openai import OpenAI
 
 def call_openai_api(messages, temperature = 0.9, max_tokens = 250):
