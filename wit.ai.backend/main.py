@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-from wit.ai.backend import getAnswer as get_answer_router
+from features.get_answer import router as get_answer_router
 
 
 app = FastAPI()

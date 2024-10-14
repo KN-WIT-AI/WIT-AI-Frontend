@@ -36,4 +36,4 @@ def generate_pin(length=4):
     return ''.join(random.choices('0123456789', k=length))
 
 def getPIN():
-    return nouns[random.randint(0, nouns.__sizeof__)]
+    return nouns[random.randint(0, len(nouns))]
