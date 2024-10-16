@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from features.game import getPIN
 from features.request import GetAnswerRequest, GetChatRequest
 from infrastructure.mongo_client import count_messages, get_messages, save_message
 from infrastructure import openai_client as oai
@@ -30,9 +31,10 @@ async def get_answer(request: GetAnswerRequest) -> str:
     messages_count = count_messages(request.chat_id)
     
     if messages_count == 0:
-        save_message(request.chat_id, "Your PIN is 'halabarda' in polish language!!!", "system")
+        PIN = getPIN()
+        save_message(request.chat_id, f"Your PIN is {PIN}", "system")
         save_message(request.chat_id, welcome_message, "assistant")
-    
+
     save_message(request.chat_id, request.content, "user")
     messages = get_messages(request.chat_id)
     
