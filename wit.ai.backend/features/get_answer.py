@@ -33,7 +33,8 @@ async def get_answer(request: GetAnswerRequest) -> str:
     if messages_count == 0:
         PIN = getPIN()
         save_message(request.chat_id, f"Your PIN is {PIN}", "system")
-    
+        save_message(request.chat_id, welcome_message, "assistant")
+
     save_message(request.chat_id, request.content, "user")
     messages = get_messages(request.chat_id)
     
