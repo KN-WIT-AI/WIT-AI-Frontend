@@ -1,5 +1,4 @@
 import random
-from infrastructure import openai_client as oai
 
 nouns = [
     "dom", "kot", "pies", "drzewo", "samochód", "rower", "książka", "komputer", "telefon", "długopis", 
@@ -30,10 +29,6 @@ nouns = [
     "konstruktor", "naukowiec", "filozof", "historyk", "geograf", "biolog", "chemik", 
     "fizyk", "matematyk", "astronom", "kosmonauta", "astronauta", "robotyk", "informatyk"
 ]
-
-
-def generate_pin(length=4):
-    return ''.join(random.choices('0123456789', k=length))
 
 def getPIN():
     return nouns[random.randint(0, len(nouns))]
