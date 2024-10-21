@@ -1,6 +1,8 @@
 import { ChatMessage } from "../models/chat-message";
 
-const apiBaseUrl = "http://127.0.0.1:8080/api";
+// const windowLocation = window.location;
+// const apiBaseUrl = `${windowLocation.protocol}//${windowLocation.hostname}:8080/api`;
+const apiBaseUrl = 'https://witai-api.kindcliff-46f9f595.polandcentral.azurecontainerapps.io/api';
 
 async function postRequest(endpoint: string, body: unknown) {
   const response = await fetch(`${apiBaseUrl}${endpoint}`, {
@@ -20,7 +22,7 @@ async function getRequest(endpoint: string) {
 }
 
 export async function getWelcomeMessage() {
-  return await getRequest('/get-welcome-message')
+  return await getRequest('/get-welcome-message');
 }
 
 export async function getChatAnswer(
@@ -38,5 +40,3 @@ export async function getChatHistory(chatId: string): Promise<ChatMessage[]> {
     "chat_id": chatId
   });
 }
-
-

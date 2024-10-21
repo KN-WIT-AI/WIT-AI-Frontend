@@ -6,9 +6,9 @@ import { delayTask, uuidv4 } from "./logic/chat-helpers";
 import { chatLetterDelay } from "./models/chat-consts";
 import {
   Button,
+  Card,
   Divider,
   Flex,
-  Heading,
   SkeletonCircle,
   useToast,
   UseToastOptions,
@@ -64,7 +64,7 @@ export function Chat() {
     }
   }
 
-  async function putWelcomeMessage(){
+  async function putWelcomeMessage() {
     const welcomeMessage = await getBotWelcomeMessage();
     setInputDisabled(true);
     setChat([welcomeMessage]);
@@ -139,38 +139,48 @@ export function Chat() {
   }
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <Flex direction={"row"} justifyContent={"space-between"}>
-        <Heading>Chat</Heading>
-        <Button onClick={() => resetChat()}>Clear</Button>
+    <Flex padding={["2rem", "4rem"]} direction={"column"}>
+      <Flex direction={"row"} justifyContent={"flex-end"}>
+        <Button onClick={() => resetChat()}>Restart</Button>
       </Flex>
       <Flex marginY={"2rem"}>
         <Divider />
       </Flex>
-      <Flex justifyContent={"flex-end"} direction={"column"} height={"100%"}>
-        <Flex
-          direction={"column"}
-          minHeight={"75dvh"}
-          justifyContent={"flex-end"}
-        >
-          {chat.map((message, index) => (
-            <ChatBlock key={index} message={message} />
-          ))}
-          {waiting && (
-            <Flex gap={"0.5rem"} paddingY={"1rem"} justifyContent={"center"}>
-              <SkeletonCircle size="4" />
-              <SkeletonCircle size="4" />
-              <SkeletonCircle size="4" />
-            </Flex>
-          )}
-        </Flex>
+      <div style={{ overflow: "auto", maxHeight: "70dvh" }}>
+        <Card padding={"0.5rem 1rem"}>
+          Oto nasze zasady: <br />
+          - Możesz zadawać pytania, ale nie mogą one dotyczyć bezpośrednio
+          hasła. <br />
+          - Możesz zgadywać hasło, ale jeżeli nie zgadniesz, to nie będę mógł ci
+          pomóc. <br />- Jeżeli zgadniesz hasło, to dostaniesz link do
+          formularza Google, w którym będziesz mógł wpisać swoje dane i zgłosić
+          się do naszego koła. <br />
+          - Jeżeli nie zgadniesz hasła, to nie dostaniesz linku. <br />
+          Powodzenia! 🔥
+        </Card>
+        <Flex justifyContent={"flex-end"} direction={"column"}>
+          <Flex direction={"column"}>
+            {chat.map((message, index) => (
+              <ChatBlock key={index} message={message} />
+            ))}
+            {waiting && (
+              <Flex gap={"0.5rem"} paddingY={"1rem"} justifyContent={"center"}>
+                <SkeletonCircle size="4" />
+                <SkeletonCircle size="4" />
+                <SkeletonCircle size="4" />
+              </Flex>
+            )}
+          </Flex>
 
-        <ChatInput
-          ref={inputRef}
-          onMessageInput={insertMessage}
-          disabled={inputDisabled}
-        />
-      </Flex>
-    </div>
+          <Flex maxWidth={["100%", "30%"]}>
+            <ChatInput
+              ref={inputRef}
+              onMessageInput={insertMessage}
+              disabled={inputDisabled}
+            />
+          </Flex>
+        </Flex>
+      </div>
+    </Flex>
   );
 }

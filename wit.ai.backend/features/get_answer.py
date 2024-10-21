@@ -6,7 +6,7 @@ from infrastructure import openai_client as oai
 
 router = APIRouter()
 
-welcome_message = "Witaj przybyszu, uczestniczysz w wielkiej przeprawie której wynikiem będzie wygranie wstępu do tajnego koła naukowego. 😃 Spróbuj zgadnąć hasło jakie sobie wymyśliłem."
+welcome_message = "Witaj przybyszu, uczestniczysz w wielkiej przeprawie której wynikiem będzie wygranie wstępu do tajnego koła naukowego. 😃 Spróbuj zgadnąć hasło jakie wymyśliłem."
 
 @router.get("/api/get-welcome-message")
 async def get_welcome_message():
