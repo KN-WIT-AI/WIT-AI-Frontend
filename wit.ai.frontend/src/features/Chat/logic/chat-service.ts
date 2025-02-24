@@ -2,7 +2,7 @@ import { ChatMessage } from "../models/chat-message";
 
 // const windowLocation = window.location;
 // const apiBaseUrl = `${windowLocation.protocol}//${windowLocation.hostname}:8080/api`;
-const apiBaseUrl = 'https://witai-api.kindcliff-46f9f595.polandcentral.azurecontainerapps.io/api';
+const apiBaseUrl = 'https://ai-guessmaster.greenpond-ab57b543.polandcentral.azurecontainerapps.io/api';
 
 async function postRequest(endpoint: string, body: unknown) {
   const response = await fetch(`${apiBaseUrl}${endpoint}`, {

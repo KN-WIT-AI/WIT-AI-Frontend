@@ -147,7 +147,11 @@ export function Chat() {
         <Divider />
       </Flex>
       <div style={{ overflow: "auto", maxHeight: "70dvh" }}>
-        <Card padding={"0.5rem 1rem"}>
+        <Card
+          padding={"0.5rem 1rem"}
+          justifyContent={"flex-end"}
+          maxWidth={["80%", "30%"]}
+        >
           Oto nasze zasady: <br />
           - Możesz zadawać pytania, ale nie mogą one dotyczyć bezpośrednio
           hasła. <br />
