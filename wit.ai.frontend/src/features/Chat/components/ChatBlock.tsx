@@ -11,8 +11,8 @@ type Props = {
 };
 
 const justifyContent = {
-  [ChatBlockType.User]: "flex-end",
-  [ChatBlockType.Bot]: "flex-start",
+  [ChatBlockType.User]: "flex-start",
+  [ChatBlockType.Bot]: "flex-end",
 };
 
 const formLink =
@@ -43,16 +43,23 @@ export function ChatBlock(props: Props) {
     >
       <Card
         padding={"0.5rem 1rem"}
-        maxWidth={"80%"}
+        maxWidth={["80%", "30%"]}
         bgColor={
           props.message.type === ChatBlockType.User ? "blue.300" : undefined
         }
       >
-        <span>
-          {reactStringReplace(text, "[placeLinkHere]", (match) => (
-            <Link key={match} href={formLink} target="_blank" rel="noreferrer" color={'blue.300'} fontWeight={'bold'}>Link do formularza</Link>
-          ))}
-        </span>
+        {reactStringReplace(text, "[placeLinkHere]", (match) => (
+          <Link
+            key={match}
+            href={formLink}
+            target="_blank"
+            rel="noreferrer"
+            color={"blue.300"}
+            fontWeight={"bold"}
+          >
+            Link do formularza
+          </Link>
+        ))}
       </Card>
     </Flex>
   );

@@ -1,10 +1,21 @@
-import { ChakraProvider, theme } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { Chat } from "./features/Chat/Chat";
-import { ColorModeSwitcher } from "./ColorModeSwitcher";
+import { extendTheme } from '@chakra-ui/react'
+
+
+const config = {
+  fonts: {
+    heading: `'Open Sans', sans-serif`,
+  },
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
+}
+
+// 3. extend the theme
+const theme = extendTheme({ config });
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <ColorModeSwitcher />
     <Chat />
   </ChakraProvider>
 );
