@@ -17,18 +17,21 @@ body::before {
   background-size: cover !important;
   background-position: center !important;
 
-  animation: breathing 4s infinite;
+  animation: breathing 4s ease-in-out infinite;
   z-index: -1;
 }
 
 @keyframes breathing {
   0% {
-    filter: brightness(80%);
+    filter: brightness(60%);
+    transform: scale(1);
   }
   50% {
-    filter: brightness(100%);
+    filter: brightness(105%);
+    transform: scale(1.015);
   }
   100% {
-    filter: brightness(80%);
+    filter: brightness(60%);
+    transform: scale(1);
   }
 }
